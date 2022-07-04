@@ -1,7 +1,7 @@
 package com.codestates.member.controller;
 
-import com.codestates.dto.MultiResponseDto;
-import com.codestates.dto.SingleResponseDto;
+import com.codestates.response.MultiResponseDto;
+import com.codestates.response.SingleResponseDto;
 import com.codestates.member.dto.MemberPatchDto;
 import com.codestates.member.dto.MemberPostDto;
 import com.codestates.member.entity.Member;

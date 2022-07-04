@@ -1,9 +1,8 @@
 package com.codestates.order.controller;
 
-import com.codestates.coffee.entity.Coffee;
 import com.codestates.coffee.service.CoffeeService;
-import com.codestates.dto.MultiResponseDto;
-import com.codestates.dto.SingleResponseDto;
+import com.codestates.response.MultiResponseDto;
+import com.codestates.response.SingleResponseDto;
 import com.codestates.order.dto.OrderPatchDto;
 import com.codestates.order.dto.OrderPostDto;
 import com.codestates.order.entity.Order;

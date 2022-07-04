@@ -1,4 +1,4 @@
-package com.codestates.dto;
+package com.codestates.response;
 
 import lombok.Getter;
 import org.springframework.data.domain.Page;
