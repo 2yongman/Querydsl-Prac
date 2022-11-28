@@ -22,7 +22,7 @@ public class Coffee {
     @Column(length = 100, nullable = false)
     private String engName;
 
-    @Column(length = 5, nullable = false)
+    @Column(nullable = false)
     private int price;
 
     @Column(length = 3, nullable = false, unique = true)
