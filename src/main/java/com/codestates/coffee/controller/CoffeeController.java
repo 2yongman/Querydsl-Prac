@@ -7,6 +7,7 @@ import com.codestates.coffee.mapper.CoffeeMapper;
 import com.codestates.coffee.service.CoffeeService;
 import com.codestates.response.MultiResponseDto;
 import com.codestates.response.SingleResponseDto;
+import com.codestates.utils.UriCreator;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +16,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.net.URI;
 import java.util.List;
 
 @RestController
 @RequestMapping("/v11/coffees")
 @Validated
 public class CoffeeController {
+    private final static String COFFEE_DEFAULT_URL = "/v11/coffees";
     private CoffeeService coffeeService;
     private CoffeeMapper mapper;
 
@@ -32,10 +35,9 @@ public class CoffeeController {
     @PostMapping
     public ResponseEntity postCoffee(@Valid @RequestBody CoffeePostDto coffeePostDto) {
         Coffee coffee = coffeeService.createCoffee(mapper.coffeePostDtoToCoffee(coffeePostDto));
+        URI location = UriCreator.createUri(COFFEE_DEFAULT_URL, coffee.getCoffeeId());
 
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(mapper.coffeeToCoffeeResponseDto(coffee)),
-                HttpStatus.CREATED);
+        return ResponseEntity.created(location).build();
     }
 
     @PatchMapping("/{coffee-id}")

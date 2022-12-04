@@ -8,6 +8,7 @@ import com.codestates.order.dto.OrderPostDto;
 import com.codestates.order.entity.Order;
 import com.codestates.order.mapper.OrderMapper;
 import com.codestates.order.service.OrderService;
+import com.codestates.utils.UriCreator;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.net.URI;
 import java.util.List;
 
 
@@ -23,6 +25,7 @@ import java.util.List;
 @RequestMapping("/v11/orders")
 @Validated
 public class OrderController {
+    private final static String ORDER_DEFAULT_URL = "/v11/orders";
     private final OrderService orderService;
     private final OrderMapper mapper;
     private final CoffeeService coffeeService;
@@ -38,20 +41,16 @@ public class OrderController {
     @PostMapping
     public ResponseEntity postOrder(@Valid @RequestBody OrderPostDto orderPostDto) {
         Order order = orderService.createOrder(mapper.orderPostDtoToOrder(orderPostDto));
+        URI location = UriCreator.createUri(ORDER_DEFAULT_URL, order.getOrderId());
 
-        // TODO JPA 기능에 맞춰서 회원이 주문한 커피 정보를 ResponseEntity에 포함 시키세요.
-
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(mapper.orderToOrderResponseDto(order, null)),
-                HttpStatus.CREATED);
+        return ResponseEntity.created(location).build();
     }
 
     @PatchMapping("/{order-id}")
     public ResponseEntity patchOrder(@PathVariable("order-id") @Positive long orderId,
                                      @Valid @RequestBody OrderPatchDto orderPatchDto) {
         orderPatchDto.setOrderId(orderId);
-        Order order =
-                orderService.updateOrder(mapper.orderPatchDtoToOrder(orderPatchDto));
+        Order order = orderService.updateOrder(mapper.orderPatchDtoToOrder(orderPatchDto));
 
         // patchOrder는 수정하지 마세요. 레퍼런스 코드에서 주문한 커피 정보가 포함 됩니다.
         return new ResponseEntity<>(
