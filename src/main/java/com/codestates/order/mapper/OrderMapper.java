@@ -13,6 +13,6 @@ import java.util.List;
 public interface OrderMapper {
     Order orderPostDtoToOrder(OrderPostDto orderPostDto);
     Order orderPatchDtoToOrder(OrderPatchDto orderPatchDto);
-    OrderResponseDto orderToOrderResponseDto(Order order, List<Coffee> coffees);
+    OrderResponseDto orderToOrderResponseDto(Order order);
     List<OrderResponseDto> ordersToOrderResponseDtos(List<Order> orders);
 }
