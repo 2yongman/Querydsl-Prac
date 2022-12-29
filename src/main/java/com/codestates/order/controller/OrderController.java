@@ -52,8 +52,7 @@ public class OrderController {
         orderPatchDto.setOrderId(orderId);
         Order order = orderService.updateOrder(mapper.orderPatchDtoToOrder(orderPatchDto));
 
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(mapper.orderToOrderResponseDto(order)), HttpStatus.OK);
+        return new ResponseEntity<>(null);
     }
 
     @GetMapping("/{order-id}")
@@ -62,7 +61,7 @@ public class OrderController {
 
         // TODO JPA 기능에 맞춰서 회원이 주문한 커피 정보를 ResponseEntity에 포함 시키세요.
 
-        return new ResponseEntity<>(new SingleResponseDto<>(mapper.orderToOrderResponseDto(order)), HttpStatus.OK);
+        return new ResponseEntity<>(null);
     }
 
     @GetMapping
@@ -73,7 +72,7 @@ public class OrderController {
 
         // TODO JPA 기능에 맞춰서 회원이 주문한 커피 정보 목록을 ResponseEntity에 포함 시키세요.
 
-        return new ResponseEntity<>(new MultiResponseDto<>(mapper.ordersToOrderResponseDtos(orders), pageOrders), HttpStatus.OK);
+        return new ResponseEntity<>(null);
     }
 
     @DeleteMapping("/{order-id}")
