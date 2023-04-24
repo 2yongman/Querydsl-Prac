@@ -13,9 +13,9 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
- *  - 메서드 구현
- *  - DI 적용
- *  - Spring Data JPA 적용
+ * - 메서드 구현
+ * - DI 적용
+ * - Spring Data JPA 적용
  */
 @Service
 public class MemberService {
@@ -39,6 +39,8 @@ public class MemberService {
                 .ifPresent(name -> findMember.setName(name));
         Optional.ofNullable(member.getPhone())
                 .ifPresent(phone -> findMember.setPhone(phone));
+        Optional.ofNullable(member.getStamp())
+                .ifPresent(stamp -> findMember.setStamp(stamp));
         // 추가된 부분
         Optional.ofNullable(member.getMemberStatus())
                 .ifPresent(memberStatus -> findMember.setMemberStatus(memberStatus));

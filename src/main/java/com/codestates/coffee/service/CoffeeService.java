@@ -77,7 +77,8 @@ public class CoffeeService {
             throw new BusinessLogicException(ExceptionCode.COFFEE_CODE_EXISTS);
     }
 
-    private Coffee findVerifiedCoffeeByQuery(long coffeeId) {
+    //커피가 존재하는지 확인
+    protected Coffee findVerifiedCoffeeByQuery(long coffeeId) {
         Optional<Coffee> optionalCoffee = coffeeRepository.findByCoffee(coffeeId);
         Coffee findCoffee =
                 optionalCoffee.orElseThrow(() ->

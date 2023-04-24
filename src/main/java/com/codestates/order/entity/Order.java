@@ -1,12 +1,15 @@
 package com.codestates.order.entity;
 
 import com.codestates.member.entity.Member;
+import com.codestates.orderCoffee.entity.OrderCoffee;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -29,6 +32,9 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
+    private List<OrderCoffee> orderCoffeeList = new ArrayList<>();
 
     public void addMember(Member member) {
         this.member = member;
