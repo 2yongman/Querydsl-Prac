@@ -8,4 +8,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create  # (1) 스키마 자동 생성
-    show-sql: true      # (2) SQL 쿼리 출력
+#    show-sql: true      # (2) SQL 쿼리 출력
+      format-sql: true
+
+
+
+logging.level:
+  org.hibernate.SQL: debug
+  org.hibernate.type: trace # value 들을 볼 수 있음
