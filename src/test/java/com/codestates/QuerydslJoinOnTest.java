@@ -48,21 +48,44 @@ public class QuerydslJoinOnTest {
 
     /*
      * 회원과 팀을 조인하면서, 팀 이름이 teamA인 팀만 조인, 회원은 모두 조회
+     * left, right 조인은 외부조인이 정말 필요할때만 쓰고, 왠만하면 inner join을 쓰되 where을 병행하자.
     */
     @Test
     public void join_on_filtering(){
         QMember member = QMember.member;
         QTeam team = QTeam.team;
 
-        List<com.querydsl.core.Tuple> result = queryFactory
-                .select(member,team)
+        List<Tuple> result = queryFactory
+                .select(member, team)
                 .from(member)
-                .leftJoin(member.team)
-                .on(team.name.eq("teanA"))
+                .leftJoin(member.team,team)
+                .on(team.name.eq("teamA"))
                 .fetch();
-
         for (Tuple tuple : result){
-            System.out.println("tuple = " + tuple);
+            System.out.println("tuple = " + tuple );
+        }
+    }
+
+    /*
+        연관관계가 없는 엔티티 외부조인
+        회원의 이름이 팀 이름과 같은 대상 외부 조인
+     */
+    @Test
+    public void join_on_no_relation(){
+        em.persist(new Member("teamA"));
+        em.persist(new Member("teamB"));
+        em.persist(new Member("teamC"));
+
+        QMember member = QMember.member;
+        QTeam team = QTeam.team;
+        List<Tuple> result = queryFactory
+                .select(member, team)
+                .from(member)
+                .leftJoin(team)
+                .on(member.username.eq(team.name))
+                .fetch();
+        for (Tuple tuple : result){
+            System.out.println("tuple : " + tuple);
         }
     }
 }
