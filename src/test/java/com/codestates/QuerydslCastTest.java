@@ -72,7 +72,7 @@ public class QuerydslCastTest {
         }
     }
 
-    //복잡한 조건
+    //복잡한 조건-> 많이 쓰이진 않음
     @Test
     public void caseTest2() {
         QMember member = QMember.member;
